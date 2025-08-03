@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -45,4 +46,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function reviews() { return $this->hasMany(Review::class); }
+    public function comments() { return $this->hasMany(Comment::class); }
+    public function bookmarks() { return $this->hasMany(Bookmark::class); }
+    public function votes() { return $this->hasMany(Vote::class); }
+
 }
