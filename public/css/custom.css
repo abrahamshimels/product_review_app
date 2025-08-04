@@ -1,0 +1,51 @@
+.navbar {
+    padding: 0.5rem 1rem;
+}
+
+.nav-link {
+    position: relative;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    color: #495057;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #0d6efd;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    width: calc(100% - 2rem);
+    height: 2px;
+    background-color: #0d6efd;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    transform: scaleX(1);
+}
+
+.brand-highlight {
+    color: #0d6efd;
+}
+
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        padding: 1rem;
+        background: white;
+        border-radius: 0.25rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+        margin-top: 0.5rem;
+    }
+
+    .nav-item {
+        margin: 0.25rem 0;
+    }
+}
+

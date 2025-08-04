@@ -9,8 +9,9 @@ class ProductController extends Controller
 {
 
     public function index()
-    {
-        $products = Product::with('categories')->latest()->paginate(12);
+    {   
+        $products = Product::with(['categories', 'reviews'])->paginate(10);
+
         return view('products.index', compact('products'));
     }
 
@@ -25,7 +26,14 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $keyword = $request->input('q');
-        $products = Product::where('name', 'LIKE', "%$keyword%")->paginate(10);
-        return view('products.index', compact('products'));
+
+        $products = Product::where(function ($query) use ($keyword) {
+            $query->where('name', 'LIKE', "%$keyword%")
+                ->orWhere('description', 'LIKE', "%$keyword%");
+        })
+            ->paginate(10)
+            ->appends(['q' => $keyword]); // Preserve search term in pagination links
+
+        return view('products.index', compact('products', 'keyword'));
     }
 }

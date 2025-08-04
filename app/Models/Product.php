@@ -11,6 +11,7 @@ class Product extends Model
         'name',
         'description',
         'slug',
+        'image',
     ];
     public function reviews()
     {
@@ -25,4 +26,6 @@ class Product extends Model
     {
         return $this->reviews()->avg('rating');
     }
+
+    
 }

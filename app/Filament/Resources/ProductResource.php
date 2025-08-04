@@ -26,7 +26,16 @@ class ProductResource extends Resource
                 Forms\Components\TextInput::make('name')->required(),
                 Forms\Components\Textarea::make('description'),
                 Forms\Components\TextInput::make('slug')->required()->unique(ignoreRecord: true),
+                Forms\Components\FileUpload::make('image')
+                    ->image()
+                    ->disk('public')
+                    ->directory('product_images')
+                    ->nullable()
+                    ->maxSize(1024)
+                    ->acceptedFileTypes(['image/*'])
+                    ->columnSpanFull(),
             ]);
+
     }
 
     public static function table(Table $table): Table
