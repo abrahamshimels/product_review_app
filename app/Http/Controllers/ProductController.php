@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Services\GeminiService;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -15,12 +16,15 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
-    public function show($slug)
+    public function show($slug, GeminiService $gemini)
     {
         $product = Product::with(['reviews.user', 'reviews.sources'])->where('slug', $slug)->firstOrFail();
         $reviewSources = $product->reviews->flatMap->sources; // Simplified
 
-        return view('products.show', compact('product', 'reviewSources')); 
+        $prompt = "Write a short product review based on this name: {$product->name}";
+        $aiReview = $gemini->generateReview($prompt);
+
+        return view('products.show', compact('product', 'reviewSources', 'aiReview')); 
     }
 
     public function search(Request $request)

@@ -80,7 +80,7 @@
     </style>
 </head>
 <body>
-@include('partials.head')
+    @include('partials.head')
     <div class="product-list container my-5">
         <div class="row g-4">
             @foreach ($products as $product)
@@ -98,9 +98,16 @@
                     @endif
 
                     <div class="card-img-overlay">
-                        <span class="badge bg-primary">{{ $product->category->name ?? 'Uncategorized' }}</span>
-                        
-                                <span class="ms-2"> {{ $product->reviews->first()->body ?? null }} </span>
+                        {{-- <span class="badge bg-primary">{{ $product->category->name ?? 'Uncategorized' }}</span> --}}
+                        @forelse ($product->categories as $category)
+                        <span class="badge bg-primary">{{ $category->name }}</span>
+                        @empty
+                        <span class="badge bg-secondary">Uncategorized</span>
+                        @endforelse
+
+
+
+                        <span class="ms-2"> {{ $product->reviews->first()->body ?? null }} </span>
                         <div class="rating-stars">
                             @for ($i = 1; $i <= 5; $i++) @if ($i <=$product->averageRating())
                                 <i class="fas fa-star text-warning"></i>
@@ -131,7 +138,7 @@
     <div class="d-flex justify-content-center">
         {{ $products->links('vendor.pagination.bootstrap-5') }}
     </div>
-@include('partials.footer')
+    @include('partials.footer')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

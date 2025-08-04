@@ -12,7 +12,7 @@ class BookmarkController extends Controller
     {
         $product = Product::findOrFail($id);
         Bookmark::updateOrCreate(
-            ['user_id' => auth()->id(), 'review_id' => null, 'product_id' => $product->id],
+            ['user_id' => auth()->id(), 'review_id' =>$id],
             []
         ) ?: Bookmark::where('user_id', auth()->id())->where('product_id', $product->id)->delete();
 

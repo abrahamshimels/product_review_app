@@ -11,7 +11,8 @@
                     <ul class="dropdown-menu">
                         @foreach($categories as $category)
                         <li>
-                            <a class="dropdown-item" href="{{ route('products.index', $category->id) }}">
+                            <a class="dropdown-item" href="{{ route('products.category', $category->id) }}">
+
                                 {{ $category->name }}
                             </a>
                         </li>
@@ -82,4 +83,3 @@
         </nav>
     </div>
 </header>
-

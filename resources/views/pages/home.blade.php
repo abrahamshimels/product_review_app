@@ -502,8 +502,10 @@
                     <div class="category-carousel swiper">
                         <div class="swiper-wrapper">
                             @foreach($categories as $category)
-                            <a href="{{ route('products.index', $category->slug) }}" class="nav-link category-item swiper-slide">
-                                <img src="{{ $category->image ? asset('storage/'.$category->image) : 'https://via.placeholder.com/100?text=Category' }}" alt="{{ $category->name }}">
+                                                        
+
+                            <a href="{{ route('products.category', $category->id) }}" class="nav-link category-item swiper-slide">
+                                {{-- <img src="{{ $category->image ? asset('storage/'.$category->image) : 'https://via.placeholder.com/100?text=Category' }}" alt="{{ $category->name }}"> --}}
                                 <h3 class="category-title">{{ $category->name }}</h3>
                             </a>
                             @endforeach
@@ -529,7 +531,8 @@
             </div>
 
             <div class="row g-4">
-                @foreach ($products as $product)
+                @foreach ($trendingProducts as $product)
+
                 <div class="col-md-4 mb-4">
                     <div class="card product-card text-white h-100">
                         @if($product->image)
@@ -543,7 +546,15 @@
                         @endif
 
                         <div class="card-img-overlay">
-                            <span class="badge bg-primary">{{ $product->category->name ?? 'Uncategorized' }}</span>
+                            {{-- <span class="badge bg-primary">{{ $product->category->name ?? 'Uncategorized' }}</span>
+                             --}}
+                             @forelse ($product->categories as $category)
+                             <span class="badge bg-primary">{{ $category->name }}</span>
+                             @empty
+                             <span class="badge bg-secondary">Uncategorized</span>
+                             @endforelse
+
+
 
                             <div class="rating-stars">
                                 @for ($i = 1; $i <= 5; $i++) @if ($i <=$product->averageRating())
@@ -585,7 +596,8 @@
 
             <div class="products-carousel swiper">
                 <div class="swiper-wrapper">
-                    @foreach ($products as $product)
+                    @foreach ($newArrivals as $product)
+
                     <div class="swiper-slide">
                         <div class="product-item">
                             @if($product->is_new)
@@ -614,7 +626,7 @@
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="price">${{ number_format($product->price, 2) }}</span>
+                                {{-- <span class="price">${{ number_format($product->price, 2) }}</span> --}}
                                 <a href="{{ route('products.show', $product->slug) }}" class="btn btn-sm btn-primary">View</a>
                             </div>
                         </div>
@@ -641,7 +653,8 @@
             </div>
 
             <div class="row g-4">
-                @foreach ($products as $product)
+                @foreach ($topRatedProducts as $product)
+
                 <div class="col-md-3">
                     <div class="product-item">
                         <div class="position-relative">
@@ -673,7 +686,7 @@
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="price fw-bold">${{ number_format($product->price, 2) }}</span>
+                                {{-- <span class="price fw-bold">${{ number_format($product->price, 2) }}</span> --}}
                                 <a href="{{ route('products.show', $product->slug) }}" class="btn btn-sm btn-outline-primary">Details</a>
                             </div>
                         </div>
